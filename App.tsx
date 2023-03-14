@@ -1,5 +1,8 @@
 import { Button, StyleSheet, Text, View } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
 const HomeStack = createStackNavigator();
@@ -10,6 +13,13 @@ export default function App() {
       <HomeStack.Navigator>
         <HomeStack.Group>
           <HomeStack.Screen name="Home" component={HomeScreen} />
+          <HomeStack.Screen
+            name="Stack"
+            component={StackScreen}
+            options={{
+              cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+            }}
+          />
         </HomeStack.Group>
         <HomeStack.Group
           screenOptions={{
@@ -30,6 +40,10 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <Text>Home</Text>
       <Button title="Open Modal" onPress={() => navigation.navigate("Modal")} />
+      <Button
+        title="Open Stack Screen"
+        onPress={() => navigation.navigate("Stack")}
+      />
     </View>
   );
 }
@@ -39,6 +53,18 @@ function ModalScreen({ navigation }) {
     <View style={styles.container}>
       <Text>Modal</Text>
       <Button title="Close Modal" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
+function StackScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text>Stack</Text>
+      <Button
+        title="Open Home Screen"
+        onPress={() => navigation.navigate("Home")}
+      />
     </View>
   );
 }
